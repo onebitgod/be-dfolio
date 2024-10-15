@@ -19,7 +19,8 @@
     "express-session": "^1.18.1",
     "mongoose": "^8.7.1",
     "redis": "^4.3.0",
-    "siwe": "^2.3.2"
+    "siwe": "^2.3.2",
+    "shared": "git+https://shared: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@github.com/onebitgod/shared#1.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

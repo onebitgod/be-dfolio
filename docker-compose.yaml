@@ -10,6 +10,7 @@ services:
     volumes:
       - ./proxy:/app
       - /app/node_modules
+      - ./shared:/shared
 
   redis:
     image: redis
@@ -28,6 +29,7 @@ services:
     volumes:
       - ./auth:/app
       - /app/node_modules
+      - ./shared:/shared
     ports:
       - '9221:9229'
 
@@ -42,6 +44,7 @@ services:
     volumes:
       - ./public:/app
       - /app/node_modules
+      - ./shared:/shared
     ports:
       - '9222:9229'
 
