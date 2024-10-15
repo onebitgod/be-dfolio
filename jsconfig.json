@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "module": "NodeNext",
+    "target": "ES6",
+    "moduleResolution": "nodenext",
+
+    "paths": {
+      "shared": ["./shared/index.js"],
+      "shared/*": ["./shared/*"]
+    }
+  },
+  "exclude": ["*/node_modules", "node_modules"]
+}

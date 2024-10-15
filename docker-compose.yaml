@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile.dev
+    ports:
+      - '80:80'
+    volumes:
+      - ./proxy:/app
+      - /app/node_modules
+
+  redis:
+    image: redis
+    # ports:
+    #   - '6379:6379'
+
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - ./auth:/app
+      - /app/node_modules
+    ports:
+      - '9221:9229'
+
+  public:
+    build:
+      context: ./public
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - ./public:/app
+      - /app/node_modules
+    ports:
+      - '9222:9229'
+
+  
