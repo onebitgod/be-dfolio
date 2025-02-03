@@ -2,9 +2,11 @@ import boot from './utils/boot.js';
 import './config.js';
 
 import express from 'express';
-import { cors, sendResponse } from './utils/helpers.js';
+import { getBalance } from './services/balanceService.js';
 import router from './routes/index.js';
-import session from './middlewares/session.js';
+import { cors, sendResponse } from 'shared';
+import ChainSchema from 'shared/schemas/chain.js';
+import TokenSchema from 'shared/schemas/token.js';
 
 const app = express();
 
@@ -16,7 +18,6 @@ app.use(
     extended: true,
   })
 );
-app.use(session.sessionMiddleware());
 
 app.use(router);
 
@@ -33,9 +34,17 @@ app.use((err, req, res, next) => {
 });
 
 boot().then(() => {
-  app.listen(process.env.PORT, () => {
+  app.listen(process.env.PORT, async () => {
     console.log(`Service is listening on port ${process.env.PORT}`);
   });
 });
 
+// getBalance(
+//   '0xc7dc7dfeb183a5a803c64b765c194a6bbe333c48',
+//   'https://mainnet.infura.io/v3/712673c36b6b4d9687277c92cec0e89c'
+//   // '0x0000000000000000000000000000000000000000'
+// );
+
 export default app;
+
+// fetch();

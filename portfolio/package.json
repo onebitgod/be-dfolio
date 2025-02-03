@@ -1,5 +1,5 @@
 {
-  "name": "db",
+  "name": "portfolio",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -12,14 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@grpc/grpc-js": "^1.12.2",
-    "@grpc/proto-loader": "^0.7.13",
     "axios": "^1.7.7",
-    "connect-redis": "^7.1.1",
     "dotenv": "^16.4.5",
+    "ethers": "^6.13.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
     "mongoose": "^8.7.1",
     "redis": "^4.3.0",
-    "shared": "git+https://shared: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@github.com/onebitgod/shared#1.0.0"
+    "shared": "file:../shared"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

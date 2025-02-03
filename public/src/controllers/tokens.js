@@ -1,3 +1,1 @@
-export const getTokens = async (req, res) => {
-  a;
-};
+export const getTokens = async (req, res) => {};

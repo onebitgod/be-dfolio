@@ -2,9 +2,8 @@ import boot from './utils/boot.js';
 import './config.js';
 
 import express from 'express';
-import { cors, sendResponse } from './utils/helpers.js';
 import router from './routes/index.js';
-import session from './middlewares/session.js';
+import { cors, logger, sendResponse, sessionMiddleware } from 'shared';
 
 const app = express();
 
@@ -16,7 +15,7 @@ app.use(
     extended: true,
   })
 );
-app.use(session.sessionMiddleware());
+app.use(sessionMiddleware());
 
 app.use(router);
 
@@ -39,3 +38,4 @@ boot().then(() => {
 });
 
 export default app;
+// "shared": "git+https://shared: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@github.com/onebitgod/shared#1.0.0",

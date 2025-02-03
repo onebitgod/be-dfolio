@@ -2,7 +2,7 @@ import boot from './utils/boot.js';
 import './config.js';
 
 import express from 'express';
-import { cors, sendResponse } from './utils/helpers.js';
+import { cors, sendResponse } from 'shared';
 
 const app = express();
 
@@ -34,3 +34,5 @@ boot().then(() => {
 });
 
 export default app;
+
+// Example usage

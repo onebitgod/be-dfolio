@@ -48,4 +48,19 @@ services:
     ports:
       - '9222:9229'
 
+  portfolio:
+    build:
+      context: ./portfolio
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    volumes:
+      - ./portfolio:/app
+      - /app/node_modules
+      - ./shared:/shared
+    ports:
+      - '9223:9229'
+
   

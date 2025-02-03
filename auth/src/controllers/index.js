@@ -1,49 +1,28 @@
-import { SiweMessage } from 'siwe';
-import { sendResponse } from '../utils/helpers.js';
-import redis from '../utils/redis.js';
+import { generateNonce, SiweMessage } from 'siwe';
+import redis from 'shared/utils/redis.js';
+import { createSIWEMessage, sendResponse, verifySIWEMessage } from 'shared';
+import logger from 'shared/utils/logger.js';
+import { ethers } from 'ethers';
+import axios from 'shared/utils/axios.js';
 
 export const requestLogin = async (req, res) => {
   const { address } = req.body;
-  let siweMessage;
-  try {
-    siweMessage = new SiweMessage({
-      domain: process.env.DOMAIN,
-      address,
-      statement: 'Sign in with Ethereum to the application.',
-      uri: process.env.BASE_URL,
-      version: '1',
-      chainId: '1', // Mainnet (Change this if needed)
-      nonce: Math.random().toString(36).substring(2, 15),
-      issuedAt: new Date().toISOString(),
-    });
-  } catch (error) {
-    console.log(error);
-    sendResponse(res, 400, 'BAD REQUEST');
-    return;
+  const siweMessage = await createSIWEMessage({ address, statement: '' });
+
+  if (!siweMessage) {
+    return sendResponse(res, 400, 'cannot create login request');
   }
 
-  const message = siweMessage?.prepareMessage();
-
-  await redis.setEx(`login:${address}`, 60 * 3, siweMessage.nonce);
-
-  sendResponse(res, 200, 'Success', { message });
+  sendResponse(res, 200, 'Success', { message: siweMessage });
 };
 
 export const verifyLogin = async (req, res) => {
-  const { message, signature, address } = req.body;
+  const { signature, address } = req.body;
 
-  const key = `login:${address}`;
-  const redisNonce = await redis.get(key);
+  const err = await verifySIWEMessage({ signature, address });
 
-  if (!redisNonce) {
-    return sendResponse(res, 400, 'Request Not Found');
-  }
-
-  const siweMessage = new SiweMessage(message);
-  const { _, nonce } = await siweMessage.validate(signature);
-
-  if (redisNonce !== nonce) {
-    return sendResponse(res, 400, 'Invalid Nonce');
+  if (err) {
+    return sendResponse(res, 400, err);
   }
 
   sendResponse(res, 200, 'success');

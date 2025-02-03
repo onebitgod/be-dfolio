@@ -9,7 +9,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
-const services = ['public', 'auth'];
+const services = ['public', 'auth', 'portfolio'];
 
 services.forEach((service) => {
   const serviceName = service.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
