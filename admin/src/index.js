@@ -2,8 +2,8 @@ import boot from './utils/boot.js';
 import './config.js';
 
 import express from 'express';
-import { cors, sendResponse } from 'shared';
-// import { sendResponse } from 'shared';
+import router from './routes/index.js';
+import { cors, logger, sendResponse, sessionMiddleware } from 'shared';
 
 const app = express();
 
@@ -15,6 +15,9 @@ app.use(
     extended: true,
   })
 );
+app.use(sessionMiddleware());
+
+app.use(router);
 
 app.use((req, res) => {
   sendResponse(res, 404, 'Route does not exist');
@@ -35,5 +38,4 @@ boot().then(() => {
 });
 
 export default app;
-
-// Example usage
+// "shared": "git+https://shared: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@github.com/onebitgod/shared#1.0.0",

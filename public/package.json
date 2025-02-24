@@ -17,7 +17,7 @@
     "express": "^4.21.1",
     "mongoose": "^8.7.1",
     "redis": "^4.3.0",
-    "shared": "^0.2.0"
+    "shared": "file:../shared"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
